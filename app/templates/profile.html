@@ -1,18 +1,40 @@
 {% extends "base.html" %}
-
 {% block content %}
-<div class="profile-container">
-  <h2>Welcome, {{ user.name }}!</h2>
 
-  <div class="profile-section">
-    <h3>Your Profile</h3>
-    <p><strong>Email:</strong> {{ user.email }}</p>
-    <p><strong>Skills Offered:</strong> {{ user.skills_offered | join(', ') or 'None' }}</p>
-    <p><strong>Skills Wanted:</strong> {{ user.skills_wanted | join(', ') or 'None' }}</p>
-    <p><strong>Availability:</strong> {{ user.availability | join(', ') or 'None' }}</p>
-    <p><strong>Visibility:</strong> {{ 'Public' if user.is_public else 'Private' }}</p>
+<div class="dashboard-wrapper">
+  <div class="welcome-header">
+    <h1>👋 Welcome, {{ user.name }}!</h1>
+    <p>Your personalized skill-swap dashboard</p>
   </div>
 
-  <a href="{{ url_for('users_bp.edit_profile') }}" class="btn btn-outline-primary mt-3">Edit Profile</a>
+  <div class="dashboard-cards">
+    <div class="dashboard-card">
+      <h3>🎯 Skills Offered</h3>
+      <p>{{ user.skills_offered | join(', ') }}</p>
+    </div>
+
+    <div class="dashboard-card">
+      <h3>🎯 Skills Wanted</h3>
+      <p>{{ user.skills_wanted | join(', ') }}</p>
+    </div>
+
+    <div class="dashboard-card">
+      <h3>🕒 Availability</h3>
+      <p>{{ user.availability | join(', ') }}</p>
+    </div>
+
+    <div class="dashboard-card profile-status">
+      <h3>👤 Profile</h3>
+      <p>Status:
+        {% if user.is_public %}
+          <span class="badge accepted">Public</span>
+        {% else %}
+          <span class="badge rejected">Private</span>
+        {% endif %}
+      </p>
+      <a href="{{ url_for('users_bp.edit_profile') }}" class="btn btn-outline-primary">Edit Profile</a>
+    </div>
+  </div>
 </div>
+
 {% endblock %}
