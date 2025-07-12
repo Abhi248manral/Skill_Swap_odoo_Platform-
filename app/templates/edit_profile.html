@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="form-container">
+  <h2>Edit Profile</h2>
+  <form method="POST" action="{{ url_for('users_bp.edit_profile') }}">
+    <div class="form-group">
+      <label>Skills Offered (comma-separated):</label>
+      <input type="text" name="skills_offered" class="form-control"
+             value="{{ user.skills_offered | join(', ') }}">
+    </div>
+
+    <div class="form-group">
+      <label>Skills Wanted (comma-separated):</label>
+      <input type="text" name="skills_wanted" class="form-control"
+             value="{{ user.skills_wanted | join(', ') }}">
+    </div>
+
+    <div class="form-group">
+      <label>Availability:</label><br>
+      <input type="checkbox" name="availability" value="weekends"
+             {% if 'weekends' in user.availability %}checked{% endif %}> Weekends<br>
+      <input type="checkbox" name="availability" value="evenings"
+             {% if 'evenings' in user.availability %}checked{% endif %}> Evenings
+    </div>
+
+    <div class="form-group">
+      <label>
+        <input type="checkbox" name="is_public"
+               {% if user.is_public %}checked{% endif %}> Make Profile Public
+      </label>
+    </div>
+
+    <button type="submit" class="btn btn-success">Save</button>
+    <a href="{{ url_for('users_bp.dashboard') }}" class="btn btn-secondary">Cancel</a>
+  </form>
+</div>
+{% endblock %}

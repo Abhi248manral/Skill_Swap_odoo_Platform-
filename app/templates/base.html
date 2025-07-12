@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Skill Swap Platform</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <nav>
+    <a href="{{ url_for('users_bp.search_users') }}"><i class="fas fa-home"></i> Search</a>
+    {% if session.get('user_id') %}
+      <a href="{{ url_for('users_bp.dashboard') }}"><i class="fas fa-user"></i> Dashboard</a>
+      <a href="{{ url_for('swaps_bp.view_swaps') }}"><i class="fas fa-exchange-alt"></i> Swaps</a>
+      <a href="{{ url_for('auth_bp.logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    {% else %}
+      <a href="{{ url_for('auth_bp.login') }}"><i class="fas fa-sign-in-alt"></i> Login</a>
+    {% endif %}
+    <button id="dark-toggle" title="Toggle Dark Mode"><i class="fas fa-moon"></i></button>
+  </nav>
+
+
+  <main>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class="flashes">
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+  <script>
+  const toggle = document.getElementById('dark-toggle');
+  const body = document.body;
+
+  toggle.addEventListener('click', () => {
+    body.classList.toggle('dark');
+    localStorage.setItem('darkMode', body.classList.contains('dark'));
+  });
+
+  // Load saved mode
+  if (localStorage.getItem('darkMode') === 'true') {
+    body.classList.add('dark');
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="search-section">
+  <form method="GET" action="{{ url_for('users_bp.search_users') }}" class="search-bar">
+    <input type="text" name="q" placeholder="🔍 Search by skill (e.g., Python, UI/UX)" value="{{ query or '' }}" class="search-input">
+    <button type="submit" class="search-button">Search</button>
+  </form>
+</div>
+
+
+
+
+{% if users %}
+  <h3 class="mt-4">Search Results:</h3>
+  <div class="user-list">
+    {% for user in users %}
+      <div class="user-card">
+        <h4>{{ user.name }}</h4>
+        <p><strong>Skills Offered:</strong> {{ user.skills_offered | join(', ') }}</p>
+        <p><strong>Skills Wanted:</strong> {{ user.skills_wanted | join(', ') }}</p>
+        <p><strong>Availability:</strong> {{ user.availability | join(', ') }}</p>
+        <form action="{{ url_for('swaps_bp.send_swap', receiver_id=user._id) }}" method="POST">
+          <button type="submit" class="btn btn-sm btn-outline-success">Send Swap Request</button>
+        </form>
+      </div>
+    {% endfor %}
+  </div>
+{% elif query %}
+  <p>No users found matching "<strong>{{ query }}</strong>"</p>
+{% endif %}
+{% endblock %}

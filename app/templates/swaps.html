@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="center">💼 My Swap Dashboard</h2>
+
+<div class="dashboard-grid">
+
+  <!-- Sent Requests -->
+  <div class="dashboard-column">
+    <h3>📤 Sent Requests</h3>
+    {% if sent %}
+      {% for swap in sent %}
+        <div class="swap-card">
+          <p><strong>To:</strong> {{ swap.other_name }} </p>
+          <p><strong>Skills Offered:</strong> {{ swap.other_skills }}</p>
+          <p>Status: <span class="badge {{ swap.status }}">{{ swap.status.capitalize() }}</span></p>
+
+          {% if swap.status == 'pending' %}
+            <a href="{{ url_for('swaps_bp.cancel_swap', swap_id=swap._id) }}" class="btn btn-outline-danger">Cancel</a>
+          {% elif swap.status == 'accepted' and not swap.feedback %}
+            <form method="POST" action="{{ url_for('swaps_bp.give_feedback', swap_id=swap._id) }}">
+              <label>Rate:</label>
+              <input type="number" name="rating" min="1" max="5" required>
+              <input type="text" name="comment" placeholder="Feedback">
+              <button type="submit" class="btn btn-success">Submit</button>
+            </form>
+          {% endif %}
+        </div>
+      {% endfor %}
+    {% else %}
+      <p class="muted">No sent requests.</p>
+    {% endif %}
+  </div>
+
+  <!-- Received Requests -->
+  <div class="dashboard-column">
+    <h3>📥 Received Requests</h3>
+    {% if received %}
+      {% for swap in received %}
+        <div class="swap-card">
+          <p><strong>To:</strong> {{ swap.other_name }} </p>
+          <p><strong>Skills Offered:</strong> {{ swap.other_skills }}</p>
+          <p>Status: <span class="badge {{ swap.status }}">{{ swap.status.capitalize() }}</span></p>
+
+          {% if swap.status == 'pending' %}
+            <a href="{{ url_for('swaps_bp.respond_swap', swap_id=swap._id, action='accept') }}" class="btn btn-outline-primary">Accept</a>
+            <a href="{{ url_for('swaps_bp.respond_swap', swap_id=swap._id, action='reject') }}" class="btn btn-outline-danger">Reject</a>
+          {% endif %}
+        </div>
+      {% endfor %}
+    {% else %}
+      <p class="muted">No received requests.</p>
+    {% endif %}
+  </div>
+
+</div>
+{% endblock %}
