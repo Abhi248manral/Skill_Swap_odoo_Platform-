@@ -2,9 +2,9 @@ A mini application that enables users to list their skills and request others in
 
 Team Leader: Himanshu [himanshu2006f@gmail.com]
 
-TeamMembers->Manan Pathak[]
+TeamMembers->Manan Pathak[mananpathak0052@gmail.com]
           
-          ->Abhisekh Manral[manralabhisekh17@gmail.com]
+->Abhisekh Manral[manralabhisekh17@gmail.com]
           
 ![image alt](https://github.com/Abhi248manral/Skill_Swap_odoo_Platform-/blob/master/Screenshot%202025-07-12%20183338.png)
 ![image alt](https://github.com/Abhi248manral/Skill_Swap_odoo_Platform-/blob/master/Screenshot%202025-07-12%20183355.png)
